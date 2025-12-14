@@ -13,8 +13,7 @@ const mddb = new MarkdownDB({
   client: ClientD1,
   connection: {
     database: env.DB
-  },
-  useNullAsDefault: true
+  }
 })
 
 await mddb.init()
