@@ -24,13 +24,13 @@
     "@cloudflare/workers-types": "^4.20251213.0",
     "@types/node": "^20.19.0",
     "ignore": "^7.0.5",
+    "mddb": "^0.9.5",
     "typescript": "5.4.5",
     "vite": "7.1.11",
     "vite-tsconfig-paths": "^4.2.1",
     "wrangler": "^4.54.0"
   },
   "dependencies": {
-    "knex-cloudflare-d1": "^0.2.1",
-    "mddb": "^0.9.5"
+    "knex-cloudflare-d1": "^0.2.1"
   }
 }

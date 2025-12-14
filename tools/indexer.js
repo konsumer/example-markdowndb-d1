@@ -16,17 +16,27 @@ const mddb = new MarkdownDB({
   }
 })
 
+// test, that just uses sqlite file (for comparison)
+// const mddb = new MarkdownDB({
+//   client: 'sqlite3',
+//   connection: {
+//     filename: '.markdowndb/example.db'
+//   }
+// })
+
 await mddb.init()
 
-await mddb.indexFolder({
-  folderPath: 'blog'
-})
+// here i am monkey-patching batchInsert to not use compound query, and also D1 does not support transactions
+mddb.db.context.batchInsert = async (table, records = []) => {
+  if (!Array.isArray(records)) {
+    return []
+  }
+  return await Promise.all(records.map((chunk) => mddb.db(table).insert(chunk)))
+}
 
-const blogs = await mddb.getFiles({
-  folder: 'blog',
-  extensions: ['md', 'mdx']
-})
+await mddb.indexFolder({ folderPath: 'blog' })
 
+const blogs = await mddb.getFiles()
 console.log(blogs)
 
 // this is needed because getPlatformProxy holds it async
